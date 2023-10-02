@@ -29,9 +29,9 @@
               {% endfor %}
             {% else %} Нет токенов {% endif %}
           </p>
+          {% set messages_not_token = get_flashed_messages(category_filter=["not_token_in_page"]) %}
           {% include "add_token.html" %}
-        </div>
-        
+        </div>  
       </div>
     </section>
   </main>

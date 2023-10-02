@@ -1,6 +1,6 @@
 import json
 
-from flask import redirect, render_template, url_for
+from flask import redirect, render_template, url_for, flash
 
 from . import app, db
 from .forms import TokenForm
@@ -60,6 +60,7 @@ def index_view():
         name = form.name.data.lower()
         alternative = form.alternative.data.lower()
         if name not in IMAGES[number].get('tokens'):
+            flash('Такого токена нет на странице!', 'not_token_in_page')
             return render_template(
                 'index.html', image=image, form=form,
                 file=get_url(image.get('uuid'))

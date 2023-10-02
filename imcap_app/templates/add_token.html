@@ -18,12 +18,10 @@
     </p>
     {{ form.submit(class="button px-5 py-3 btn") }}
     <p class="py-3 mb-3">
-      {% with messages = get_flashed_messages(category_filter=["unique_text"]) %}
-        {% if messages %}
-          {% for message in messages %}
-            {{ message }}
+        {% if messages_not_token %}
+          {% for message in messages_not_token %}
+          <span style="color: red"> {{ message }} </span>
           {% endfor %}
         {% endif %}
-      {% endwith %}
     </p>
   </form>
