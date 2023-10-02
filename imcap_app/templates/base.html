@@ -11,12 +11,9 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
     <title>{% block title %}Что посмотреть{% endblock title %}</title>
   </head>
-
+  {% include "header.html" %}
   <body>
-    <!-- Тут подключается шаблон header.html. Создадим его чуть позже -->
-    {% include "header.html" %} 
     {% block content %}{% endblock content %}
-    <!-- Тут подключается шаблон footer.html. Его тоже скоро создадим -->
-    {% include "footer.html" %}
   </body>
+  {% include "footer.html" %}
 </html>

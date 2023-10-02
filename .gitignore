@@ -1,3 +1,5 @@
 database.py
 __pycache__
 venv/
+images/
+0tokens.jsonlines

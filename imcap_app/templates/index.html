@@ -1,0 +1,38 @@
+{% extends "base.html" %} 
+{% block title %}Что посмотреть{%endblock %} 
+{% block content %}
+
+<main>
+    <section class="container my-5">
+      <div class="row">
+        <h1>UUID: {{ image.uuid }}</h1>
+        <div class="col-12 col-lg-5">
+          <img class="img-fluid mx-auto d-block" src="{{ file }}" alt="" />
+        </div>
+        <div class="col-12 col-lg-7 my-5">
+          <p>
+            <h2>Описание:</h2>
+            {% if image.text %}
+              {% for text in image.text %}
+                <br>- {{ text }}
+              {% endfor %}
+            {% else %} Нет описания {% endif %}
+          </p>
+          <p>
+            <h2>Токены: </h2>
+            {% if image.tokens %}
+              {% for token in image.tokens %}
+                <br><h5> - {{ token.name }}
+                  {% if token.id %}
+                      <a class="btn px-2 py-1 btn-danger" href="{{ url_for('delete_token_view', token_id=token.id, _external=True) }}">удалить</a>
+                  {% endif%}</h5>
+              {% endfor %}
+            {% else %} Нет токенов {% endif %}
+          </p>
+          {% include "add_token.html" %}
+        </div>
+        
+      </div>
+    </section>
+  </main>
+{% endblock %}
