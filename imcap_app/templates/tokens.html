@@ -1,0 +1,25 @@
+{% extends "base.html" %} 
+{% block title %}Токены{%endblock %} 
+{% block content %}
+
+<main>
+    <section class="container my-5">
+      <div class="row">
+        <h1>Все добавленные токены <a class="btn px-2 py-1 btn-secondary" href="{{ url_for('upload_to_csv') }}">выгрузить в CSV</a></h1>
+        
+        <div class="col-12 col-lg-7 my-5">
+          <p>
+            {% if tokens %}
+              {% for token in tokens %}
+                <br><h5> - {{ token.name }} -> {{ token.alternative }}
+                  {% if token.id %}
+                      <a class="btn px-2 py-1 btn-danger" href="{{ url_for('delete_token_from_all_view', token_id=token.id, _external=True) }}">удалить</a>
+                  {% endif%}</h5>
+              {% endfor %}
+            {% else %} Нет токенов {% endif %}
+          </p>
+        </div>  
+      </div>
+    </section>
+  </main>
+{% endblock %}

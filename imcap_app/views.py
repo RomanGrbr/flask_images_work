@@ -1,6 +1,8 @@
 import json
+import csv
+from io import StringIO, BytesIO
 
-from flask import redirect, render_template, url_for, flash
+from flask import redirect, render_template, url_for, flash, send_file, request
 
 from . import app, db
 from .forms import TokenForm
@@ -84,6 +86,48 @@ def index_view():
                 )
 
 
+@app.route('/all')
+def all_view():
+    """Все новые токены"""
+    tokens = Token.query.all()
+    return render_template('tokens.html', tokens=tokens)
+
+
+@app.route('/all/delete/<int:token_id>')
+def delete_token_from_all_view(token_id: int):
+    """Удалить выбранный токен и вернуться на страницу всех токенов"""
+    token = Token.query.get_or_404(token_id)
+    db.session.delete(token)
+    db.session.commit()
+    return redirect(url_for('all_view'))
+
+
+@app.route('/upload_to_csv')
+def upload_to_csv():
+    """Выгрузить новые токены в csv"""
+    fieldnames = ['last_token', 'new_token']
+    proxy = StringIO()
+    writer = csv.DictWriter(proxy, fieldnames=fieldnames)
+    writer.writeheader()
+    tokens = Token.query.all()
+    for token in tokens:
+        object = {
+            'last_token': token.name,
+            'new_token': token.alternative,
+        }
+        writer.writerow(object)
+    mem = BytesIO()
+    mem.write(proxy.getvalue().encode())
+    mem.seek(0)
+    proxy.close()
+    return send_file(
+        mem,
+        as_attachment=True,
+        download_name='tokens.csv',
+        mimetype='text/csv'
+    )
+
+
 def open_file_and_write(minus: bool) -> None:
     """Вычислить и записать индекс текущего изображения"""
     with open('session.txt', mode='r') as session_read:
@@ -113,4 +157,22 @@ def delete_token_view(token_id: int):
     token = Token.query.get_or_404(token_id)
     db.session.delete(token)
     db.session.commit()
+    return redirect(url_for('index_view'))
+
+
+@app.route('/tetris')
+def tetris():
+    """Пасхалка"""
+    return render_template('tetris.html')
+
+
+@app.route('/go/', methods=['GET', 'POST'])
+def go_view():
+    """Перейти по номеру изображения"""
+    number = int(request.form.get('number'))
+    if 0 <= number < len(IMAGES):
+        with open('session.txt', mode='w') as session_write:
+            session_write.write(str(number))
+        return redirect(url_for('index_view'))
+    flash('Такого номера нет!', 'not_image')
     return redirect(url_for('index_view'))

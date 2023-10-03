@@ -1,3 +1,17 @@
 <footer class="fixed-bottom text-center py-3 bg-light">
-  <p class="small">© Что посмотреть </p> 
+  <section class="container my-7">
+    <div class="row">
+      {% if not_image %}
+        {% for message in not_image %}
+          <form class="input-group mb-3" method="post" action="/go/">
+            <input type="number" name="number" method="post" class="form-control-sm" placeholder="{{ message }}" aria-label="" aria-describedby="basic-addon1" style="color: red">
+          </form>
+        {% endfor %}
+      {% else %}
+        <form class="input-group mb-3" method="post" action="/go/">
+          <input type="number" name="number" method="post" class="form-control-sm" placeholder="Номер изображения" aria-label="" aria-describedby="basic-addon1">
+        </form>
+      {% endif %}
+    </div>
+  </section>
 </footer>

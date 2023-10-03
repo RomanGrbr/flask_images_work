@@ -15,5 +15,6 @@
   <body>
     {% block content %}{% endblock content %}
   </body>
+  {% set not_image = get_flashed_messages(category_filter=["not_image"]) %}
   {% include "footer.html" %}
 </html>

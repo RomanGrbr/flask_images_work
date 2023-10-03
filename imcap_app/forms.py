@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, TextAreaField, IntegerField
-from wtforms.validators import DataRequired, Length, Optional
+from wtforms import StringField, SubmitField
+from wtforms.validators import DataRequired, Length
 
 
 # class ImageForm(FlaskForm):
