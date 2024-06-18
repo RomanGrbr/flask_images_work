@@ -10,3 +10,4 @@ migrate = Migrate(app, db)
 
 from . import error_handlers, views
 # from . import cli_commands, error_handlers, views
+from . import cli_commands

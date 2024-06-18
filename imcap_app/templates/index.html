@@ -5,11 +5,16 @@
 <main>
     <section class="container my-5">
       <div class="row">
-        <h1>UUID: {{ image.uuid }}</h1>
+        <p>
+          Текущий номер изображения: <b>{{ image.number }}</b>
+        </p>
         <div class="col-12 col-lg-5">
           <img class="img-fluid mx-auto d-block" src="{{ file }}" alt="" />
         </div>
         <div class="col-12 col-lg-7 my-5">
+          <p>
+            UUID: {{ image.uuid }}
+          </p>
           <p>
             <h2>Описание:</h2>
             {% if image.text %}

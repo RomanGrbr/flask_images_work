@@ -3,3 +3,4 @@ __pycache__
 venv/
 images/
 0tokens.jsonlines
+.idea

@@ -53,6 +53,7 @@ def index_view():
             session.write(str(number))
 
     image: dict[str, list[str]] = {
+        'number': number,
         'uuid': IMAGES[number].get('uuid'),
         'text': IMAGES[number].get('text'),
         'tokens': get_tokens_alternatives(IMAGES[number].get('tokens'))
@@ -61,7 +62,7 @@ def index_view():
     if form.validate_on_submit():
         name = form.name.data.lower()
         alternative = form.alternative.data.lower()
-        if name not in IMAGES[number].get('tokens'):
+        if name not in [token.lower() for token in IMAGES[number].get('tokens')]:
             flash('Такого токена нет на странице!', 'not_token_in_page')
             return render_template(
                 'index.html', image=image, form=form,
